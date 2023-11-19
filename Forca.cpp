@@ -227,8 +227,10 @@ int main(){
 		    printf("\n  Objetivos:");
 		    SetConsoleTextAttribute(hConsole, 15);
 			printf(" Descobrir a palavra com o máximo de vidas possível.\n  Chegar no topo do ranking!!\n");
+			printf("  Observação: Digite o número correspondente a categoria corretamente!!\n  Se o número da categoria estiver incorreto, a pergunta será repetida até uma categoria válida, for digitada\n");
 		    printf("\n  Selecione a categoria de palavras que você deseja jogar!\n\n  1 - Animais\n  2 - Objetos\n  3 - Verbos\n  4 - Frutas\n\n  Digite o número da categoria: ");
 			scanf("%d", &categoria);
+	
 			//Seleção da categoria e sorteio da palavra!!
 			switch (categoria) {
 				case 1:
@@ -259,7 +261,8 @@ int main(){
 					printf("\nEssa categoria é inválida ou não existe, digite outro número!!\n\n");
 					categoriaErrada = 1;
 			}
-		limpar_console();
+			limpar_console();
+		
 		} while ((categoria < 1 || categoria > 4) && categoriaErrada == 1);
 		printf("===================================================================\n");	
 		printf("  Vamos Começar, adivinhe a palavra!!!\n");
@@ -390,8 +393,13 @@ int main(){
 				}
 		out: // checkpoint do goto out
 		printf("\n  Você venceu %d e perdeu %d\n", vitorias, derrotas);
-		printf("  Deseja jogar novamente?\n   1 - Sim\n   2 - Não\n");
-		printf("\n  Resposta: ");
-		scanf("%d", &resposta);
+		do {
+			limpar_console();
+			printf("  Deseja jogar novamente?\n   1 - Sim\n   2 - Não\n");
+			printf("\n  Resposta: ");
+			scanf("%d", &resposta);
+			
+        } while (resposta != 1 && resposta != 2);
+	
 	} while(resposta == 1);
 };
