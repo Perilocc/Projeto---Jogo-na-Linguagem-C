@@ -167,6 +167,12 @@ void desenha_boneco(int vida) {
 		}
 }
 
+void tela_saida() {
+    printf("=============================================\n");
+    printf("            Obrigado por Jogar!\n");
+    printf("=============================================\n");
+}
+
 int main(){
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 15);
@@ -181,7 +187,8 @@ int main(){
 	// Lista de contadores
 	int letras_certas, chances, contagem_erros, i, underline;
 	//Outras variáveis importantes
-	int categoria, indice, tamanho;
+	int indice, tamanho;
+	char categoria;
 	int acertou = 1;
 	int coracao = 3;
 	char letra, *dica;
@@ -189,8 +196,8 @@ int main(){
 	char x, y, z, a, b, c, d, e, f, g;
 	
 	// Variáveis envolvidas no do{} while()
-	int vitorias, derrotas, resposta;
-	
+	int vitorias, derrotas;
+	char resposta;
 	vitorias = 0;
 	derrotas = 0;
 	
@@ -202,68 +209,126 @@ int main(){
 		Provavelmente ele salva na memória algum endereço!!*/
 		chances = 6;
 		char palavra[20];
-		int categoriaErrada = 0;
-		do{
+		int categoriaErrada = 0, multiCaractere = 0;
+		do {
 			// Início!!
-			categoriaErrada = 0;
 			//Aqui fica as intruções iniciais
-			limpar_console();
-			printf("===================================================================\n");
-		    printf("-------------------------");
-		    SetConsoleTextAttribute(hConsole, 6);
-			printf("Vamos Jogar Forca");
-			SetConsoleTextAttribute(hConsole, 15);
-			printf("-------------------------\n");
-			desenha_boneco(7);
-			SetConsoleTextAttribute(hConsole, 6);
-		    printf("\n  Regras:");
-		    SetConsoleTextAttribute(hConsole, 15);
-			printf(" Você terá 6");
-		    SetConsoleTextAttribute(hConsole, 4);
-			printf(" %c ", coracao);
-			SetConsoleTextAttribute(hConsole, 15);
-			printf("vidas, se errar a letra perderá uma vida.\n  Ao perder todas as vidas, Game over!!\n");
-			SetConsoleTextAttribute(hConsole, 6);
-		    printf("\n  Objetivos:");
-		    SetConsoleTextAttribute(hConsole, 15);
-			printf(" Descobrir a palavra com o máximo de vidas possível.\n  Chegar no topo do ranking!!\n");
-			printf("  Observação: Digite o número correspondente a categoria corretamente!!\n  Se o número da categoria estiver incorreto, a pergunta será repetida até uma categoria válida, for digitada\n");
-		    printf("\n  Selecione a categoria de palavras que você deseja jogar!\n\n  1 - Animais\n  2 - Objetos\n  3 - Verbos\n  4 - Frutas\n\n  Digite o número da categoria: ");
-			scanf("%d", &categoria);
-	
+			if (categoria != '5' && categoria != '6' || categoria == '9') {
+				limpar_console();
+				printf("===================================================================\n");
+			    printf("-------------------------");
+			    SetConsoleTextAttribute(hConsole, 6);
+				printf("Vamos Jogar Forca");
+				SetConsoleTextAttribute(hConsole, 15);
+				printf("-------------------------\n");
+				desenha_boneco(7);
+				SetConsoleTextAttribute(hConsole, 6);
+			    printf("\n  Regras:");
+			    SetConsoleTextAttribute(hConsole, 15);
+				printf(" Você terá 6");
+			    SetConsoleTextAttribute(hConsole, 4);
+				printf(" %c ", coracao);
+				SetConsoleTextAttribute(hConsole, 15);
+				printf("vidas, se errar a letra perderá uma vida.\n  Ao perder todas as vidas, Game over!!\n");
+				SetConsoleTextAttribute(hConsole, 6);
+			    printf("\n  Objetivos:");
+			    SetConsoleTextAttribute(hConsole, 15);
+				printf(" Descobrir a palavra com o máximo de vidas possível.\n  Chegar no topo do ranking!!\n");
+				SetConsoleTextAttribute(hConsole, 6);
+				printf("\n  Observe:");
+				 SetConsoleTextAttribute(hConsole, 15);
+				printf(" Digite o número correspondente a uma categoria. Caso o \n  número informado esteja incorreto, a pergunta será repetida até \n  que uma categoria válida seja selecionada.\n");
+			    printf("\n  Selecione a categoria de palavras que você deseja jogar!\n\n  1 - Animais\n  2 - Objetos\n  3 - Verbos\n  4 - Frutas\n\n");
+			    printf("  Ou selecione a tela que deseja acessar!\n\n  5 - Créditos\n  6 - Sair\n\n");
+			    if ( multiCaractere == 1 || categoriaErrada == 1) {
+		    		SetConsoleTextAttribute(hConsole, 4);
+					printf("  Essa categoria ou tela é inválida ou não existe, digite outro número!!\n\n");
+					SetConsoleTextAttribute(hConsole, 15);
+				}
+				printf("  Digite o número da categoria: ");
+				scanf("%c", &categoria);
+				categoriaErrada = 0;
+				if (categoria != '\n' && (getchar()) != '\n') {
+	            	multiCaractere = 1;
+		        } else {
+		            multiCaractere = 0;
+		        }
+				fflush(stdin); 
+	    	}
+	    	
 			//Seleção da categoria e sorteio da palavra!!
 			switch (categoria) {
-				case 1:
-					//Os comandos abaixo sorteiam uma das palavras presentes nos vetores declarados acima.
-					indice = rand() % (sizeof(animais) / sizeof(animais[0]));
-					strcpy(palavra, animais[indice]);
-					dica = ("Animal");
-					break;
-				case 2:
-					indice = rand() % (sizeof(objetos) / sizeof(objetos[0]));
-					strcpy(palavra, objetos[indice]);
-					dica = "Objeto";
-					break;
-				
-				case 3: 
-					indice = rand() % (sizeof(verbos) / sizeof(verbos[0]));
-					strcpy(palavra, verbos[indice]);
-					dica = "Verbo";
-					break;
-				
-				case 4:
-					indice = rand() % (sizeof(frutas) / sizeof(frutas[0]));
-					strcpy(palavra, frutas[indice]);
-					dica = "Fruta";
-					break;
+	            case '1':
+	                indice = rand() % (sizeof(animais) / sizeof(animais[0]));
+	                strcpy(palavra, animais[indice]);
+	                strcpy(dica, "Animal");
+	                break;
+	            case '2':
+	                indice = rand() % (sizeof(objetos) / sizeof(objetos[0]));
+	                strcpy(palavra, objetos[indice]);
+	                strcpy(dica, "Objeto");
+	                break;
+	            case '3':
+	                indice = rand() % (sizeof(verbos) / sizeof(verbos[0]));
+	                strcpy(palavra, verbos[indice]);
+	                strcpy(dica, "Verbo");
+	                break;
+	            case '4':
+	                indice = rand() % (sizeof(frutas) / sizeof(frutas[0]));
+	                strcpy(palavra, frutas[indice]);
+	                strcpy(dica, "Fruta");
+	                break;
+	            case '5':
+	            	do {
+		            	limpar_console();
+					    printf("=============================================\n");
+					    printf("           Agradecimento Especial!\n");
+					    printf("=============================================\n\n");
 					
-				default:
-					printf("\nEssa categoria é inválida ou não existe, digite outro número!!\n\n");
-					categoriaErrada = 1;
-			}
-			limpar_console();
-		
-		} while ((categoria < 1 || categoria > 4) && categoriaErrada == 1);
+					    printf("  Agradecemos a contribuição dos integrantes:\n\n");
+					    printf("  - Júlio César Carvalho Santos\n");
+					    printf("  - Heitor de Oliveira Mamede\n");
+					    printf("  - Perilo\n");
+					    printf("  - Kauã Ravy Alves Pontes\n\n");
+					    printf("  Pelo empenho e dedicação ao projeto!\n\n");
+					    printf("=============================================\n");
+					
+					    if (multiCaractere == 1 || categoriaErrada == 1) {
+					        SetConsoleTextAttribute(hConsole, 4);
+					        printf("\n  Essa categoria ou tela é inválida ou não existe, digite outro número!!\n\n");
+					        SetConsoleTextAttribute(hConsole, 15);
+					    }
+					
+					    printf("  Selecione a tela que deseja acessar!\n\n  1 - Ínicio\n  2 - Sair\n\n");
+					    printf("  Digite o número da categoria: ");
+					    scanf(" %c", &categoria);
+					    categoriaErrada = 0;
+					
+					    if (categoria != '\n' && (getchar()) != '\n') {
+					        multiCaractere = 1;
+					    } else {
+					        multiCaractere = 0;
+					    }
+					    
+					    if (categoria != '1' && categoria != '2') {
+					        categoriaErrada = 1;
+					    }
+					    fflush(stdin); 
+					} while (categoria < '1' || categoria > '2' || categoriaErrada == 1 || multiCaractere == 1);
+					if (categoria == '1') 
+						categoria = '9';
+					if (categoria == '2')
+						categoria = '6';
+					break;
+				case '6':
+					limpar_console();
+					tela_saida();
+					exit(0);
+	            default:
+	                categoriaErrada = 1;
+	        }
+	    } while (categoria < '1' || categoria > '4' || categoriaErrada == 1 || multiCaractere == 1);
+	    limpar_console();
 		printf("===================================================================\n");	
 		printf("  Vamos Começar, adivinhe a palavra!!!\n");
 		printf("  As palavras que serão adivinhadas, não possuem acentos!!\n  Não digite letras repetidas!!\n  Você possui 6");
@@ -394,12 +459,23 @@ int main(){
 		out: // checkpoint do goto out
 		printf("\n  Você venceu %d e perdeu %d\n", vitorias, derrotas);
 		do {
-			limpar_console();
 			printf("  Deseja jogar novamente?\n   1 - Sim\n   2 - Não\n");
 			printf("\n  Resposta: ");
-			scanf("%d", &resposta);
-			
-        } while (resposta != 1 && resposta != 2);
+			scanf(" %c", &resposta);
+			if (resposta != '\n' && (getchar()) != '\n') {
+            	multiCaractere = 1;
+	        } else {
+	            multiCaractere = 0;
+	        }
+			if ((resposta != '1' && resposta != '2') || multiCaractere == 1) {
+				limpar_console();
+				SetConsoleTextAttribute(hConsole, 4);
+				printf("  Essa resposta é inválida ou não existe, digite outro número!!\n\n");
+				SetConsoleTextAttribute(hConsole, 15);
+			}
+        } while (resposta != '1' && resposta != '2');
 	
-	} while(resposta == 1);
+	} while(resposta == '1');
+	limpar_console();
+	tela_saida();
 };
