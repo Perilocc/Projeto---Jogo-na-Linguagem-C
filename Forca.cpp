@@ -211,10 +211,10 @@ int main(){
 		char palavra[20];
 		int categoriaErrada = 0, multiCaractere = 0;
 		do {
+			limpar_console();
 			// Início!!
 			//Aqui fica as intruções iniciais
 			if (categoria != '5' && categoria != '6' || categoria == '9') {
-				limpar_console();
 				printf("===================================================================\n");
 			    printf("-------------------------");
 			    SetConsoleTextAttribute(hConsole, 6);
@@ -288,7 +288,7 @@ int main(){
 					    printf("  Agradecemos a contribuição dos integrantes:\n\n");
 					    printf("  - Júlio César Carvalho Santos\n");
 					    printf("  - Heitor de Oliveira Mamede\n");
-					    printf("  - Perilo\n");
+					    printf("  - Perilo Oliveira Viana Sobrinho\n");
 					    printf("  - Kauã Ravy Alves Pontes\n\n");
 					    printf("  Pelo empenho e dedicação ao projeto!\n\n");
 					    printf("=============================================\n");
@@ -333,9 +333,9 @@ int main(){
 		printf("  Vamos Começar, adivinhe a palavra!!!\n");
 		printf("  As palavras que serão adivinhadas, não possuem acentos!!\n  Não digite letras repetidas!!\n  Você possui 6");
 		SetConsoleTextAttribute(hConsole, 4);
-		printf(" %c");
+		printf(" %c", coracao);
 		SetConsoleTextAttribute(hConsole, 15);
-		printf(" vidas.\n", coracao);
+		printf(" vidas.\n");
 		desenha_boneco(chances);
 		
 		// Tamanho da palavra sorteada
